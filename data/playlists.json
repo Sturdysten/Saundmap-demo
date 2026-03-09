@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "name": "Yöajo",
+    "description": "Tunnelmallisia kappaleita iltaan ja yöajeluun.",
+    "songIds": [1, 2]
+  },
+  {
+    "id": 2,
+    "name": "Kaupunkivalot",
+    "description": "Kappaleita suurkaupunkien tunnelmiin.",
+    "songIds": [2, 3]
+  }
+]

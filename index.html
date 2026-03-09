@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Music Map</title>
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <h1>Music Map</h1>
+      <p>Löydä musiikkia kartalta</p>
+    </div>
+
+    <nav class="main-nav">
+      <button class="nav-button active" data-page="map-page">Kartta</button>
+      <button class="nav-button" data-page="profile-page">Oma sivu</button>
+      <button class="nav-button" data-page="playlists-page">Soittolistat</button>
+      <button class="nav-button" data-page="search-page">Haku</button>
+      <button class="nav-button" data-page="favorites-page">Suosikit</button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="map-page" class="page active-page">
+      <div class="layout">
+        <aside class="sidebar">
+          <h2>Kappaleet</h2>
+
+          <input
+            type="text"
+            id="search"
+            placeholder="Hae artistia tai kappaletta..."
+          >
+
+          <div id="song-list"></div>
+        </aside>
+
+        <section class="map-area">
+          <div id="map"></div>
+        </section>
+      </div>
+    </section>
+
+    <section id="profile-page" class="page">
+      <div class="profile-page-layout">
+        <div class="profile-panel">
+          <h2>Oma sivu</h2>
+          <p class="section-intro">Täällä hallitset profiiliasi, omia julkaisuja ja uusien kappaleiden lisäämistä.</p>
+
+          <div class="profile-card">
+            <h3>Profiili</h3>
+            <p><strong>Nimi:</strong> Demo Artist</p>
+            <p><strong>Kaupunki:</strong> Helsinki</p>
+            <p><strong>Rooli:</strong> Artisti</p>
+          </div>
+
+          <div class="profile-card">
+            <h3>Julkaise uusi kappale</h3>
+
+            <form id="upload-form">
+              <label for="upload-title">Kappaleen nimi</label>
+              <input type="text" id="upload-title" required>
+
+              <label for="upload-artist">Artisti</label>
+              <input type="text" id="upload-artist" required>
+
+              <label for="upload-city">Kaupunki</label>
+              <input type="text" id="upload-city" required>
+
+              <label for="upload-genre">Genre</label>
+              <input type="text" id="upload-genre">
+
+              <label for="upload-description">Kuvaus</label>
+              <textarea id="upload-description" rows="4"></textarea>
+
+              <label for="upload-lat">Latitude</label>
+              <input type="number" step="any" id="upload-lat" required>
+
+              <label for="upload-lon">Longitude</label>
+              <input type="number" step="any" id="upload-lon" required>
+
+              <button type="submit" class="primary-button">Lisää julkaisu</button>
+            </form>
+          </div>
+
+          <div class="profile-card">
+            <h3>Omat julkaisut</h3>
+            <div id="my-songs-list"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="playlists-page" class="page">
+      <div class="playlists-page-layout">
+        <div class="playlists-panel">
+          <h2>Soittolistat</h2>
+          <p class="section-intro">Kokeile valmiita soittolistoja ja siirry niiden kappaleista suoraan kartalle.</p>
+
+          <div id="playlists-list"></div>
+
+          <div id="playlist-detail" class="playlist-detail hidden">
+            <h3 id="playlist-detail-title">Soittolista</h3>
+            <p id="playlist-detail-description"></p>
+            <div id="playlist-songs"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="search-page" class="page">
+      <div class="search-page-layout">
+        <div class="search-panel">
+          <h2>Haku</h2>
+
+          <input
+            type="text"
+            id="global-search"
+            placeholder="Hae kappaletta, artistia tai kaupunkia..."
+          >
+
+          <div id="search-results"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="favorites-page" class="page">
+      <div class="favorites-page-layout">
+        <div class="favorites-panel">
+          <h2>Suosikit</h2>
+          <p class="section-intro">Tähän tallentuvat kappaleet, jotka merkkaat suosikeiksi.</p>
+
+          <div id="favorites-list"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+[
+  {
+    "id": 1,
+    "title": "Night Drive",
+    "artist": "DJ Aurora",
+    "city": "Helsinki",
+    "genre": "Electronic",
+    "description": "Yöajelun tunnelmaa.",
+    "lat": 60.1699,
+    "lon": 24.9384,
+    "file": "audio/demo.mp3"
+  },
+  {
+    "id": 2,
+    "title": "Tokyo Lights",
+    "artist": "Neon Pulse",
+    "city": "Tokyo",
+    "genre": "Electronic",
+    "description": "Rave suurkaupungin yössä.",
+    "lat": 35.6762,
+    "lon": 139.6503,
+    "file": "audio/demo.mp3"
+  },
+  {
+    "id": 3,
+    "title": "Tampereen Tero",
+    "artist": "Neon Pulse",
+    "city": "Tampere",
+    "genre": "Pop",
+    "description": "Tampere sekasi.",
+    "lat": 61.2953,
+    "lon": 23.4536,
+    "file": "audio/demo.mp3"
+  }
+]
