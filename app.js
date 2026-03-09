@@ -17,6 +17,9 @@ const playlistSongs = document.getElementById("playlist-songs");
 const favoritesList = document.getElementById("favorites-list");
 const mySongsList = document.getElementById("my-songs-list");
 const uploadForm = document.getElementById("upload-form");
+const showListButton = document.getElementById("show-list-button");
+const showMapButton = document.getElementById("show-map-button");
+const mapPage = document.getElementById("map-page");
 
 const navButtons = document.querySelectorAll(".nav-button");
 const pages = document.querySelectorAll(".page");
@@ -24,6 +27,48 @@ const pages = document.querySelectorAll(".page");
 let allSongs = [];
 let allPlaylists = [];
 let markers = [];
+
+function isMobile() {
+  return window.innerWidth <= 768;
+}
+
+function setMobileMapView(mode) {
+  if (!mapPage) return;
+  if (!isMobile()) return;
+
+  mapPage.classList.remove("mobile-show-list", "mobile-show-map");
+
+  if (mode === "list") {
+    mapPage.classList.add("mobile-show-list");
+    if (showListButton) showListButton.classList.add("active-toggle");
+    if (showMapButton) showMapButton.classList.remove("active-toggle");
+  }
+
+  if (mode === "map") {
+    mapPage.classList.add("mobile-show-map");
+    if (showMapButton) showMapButton.classList.add("active-toggle");
+    if (showListButton) showListButton.classList.remove("active-toggle");
+
+    setTimeout(function() {
+      map.invalidateSize();
+    }, 100);
+  }
+}
+
+function setDefaultMobileMapView() {
+  if (!mapPage) return;
+
+  mapPage.classList.remove("mobile-show-list", "mobile-show-map");
+
+  if (isMobile()) {
+    mapPage.classList.add("mobile-show-map");
+    if (showMapButton) showMapButton.classList.add("active-toggle");
+    if (showListButton) showListButton.classList.remove("active-toggle");
+  } else {
+    if (showMapButton) showMapButton.classList.remove("active-toggle");
+    if (showListButton) showListButton.classList.remove("active-toggle");
+  }
+}
 
 function getFavoriteSongIds() {
   const saved = localStorage.getItem("favoriteSongIds");
@@ -83,6 +128,10 @@ function openSongOnMap(song) {
   showPage("map-page");
   map.setView([song.lat, song.lon], 8);
 
+  if (isMobile()) {
+    setMobileMapView("map");
+  }
+
   markers.forEach(function(marker) {
     const markerLatLng = marker.getLatLng();
     if (markerLatLng.lat === song.lat && markerLatLng.lng === song.lon) {
@@ -101,12 +150,6 @@ function createFavoriteButton(song) {
   });
 
   return button;
-}
-
-function songMetaHtml(song) {
-  const genreLine = song.genre ? `<p><strong>Genre:</strong> ${song.genre}</p>` : "";
-  const descriptionLine = song.description ? `<p>${song.description}</p>` : "";
-  return `${genreLine}${descriptionLine}`;
 }
 
 function renderSongs(list) {
@@ -383,6 +426,8 @@ function showPage(pageId) {
   }
 
   if (pageId === "map-page") {
+    setDefaultMobileMapView();
+
     setTimeout(function() {
       map.invalidateSize();
     }, 100);
@@ -418,6 +463,7 @@ Promise.all([
     renderPlaylists(allPlaylists);
     renderFavorites();
     renderMySongs();
+    setDefaultMobileMapView();
   })
   .catch(function(error) {
     console.error("Data loading error:", error);
@@ -501,4 +547,26 @@ navButtons.forEach(function(button) {
     const pageId = button.getAttribute("data-page");
     showPage(pageId);
   });
+});
+
+if (showListButton) {
+  showListButton.addEventListener("click", function() {
+    setMobileMapView("list");
+  });
+}
+
+if (showMapButton) {
+  showMapButton.addEventListener("click", function() {
+    setMobileMapView("map");
+  });
+}
+
+window.addEventListener("resize", function() {
+  if (document.getElementById("map-page").classList.contains("active-page")) {
+    setDefaultMobileMapView();
+
+    setTimeout(function() {
+      map.invalidateSize();
+    }, 100);
+  }
 });

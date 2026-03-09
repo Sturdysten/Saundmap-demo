@@ -26,8 +26,13 @@
 
   <main>
     <section id="map-page" class="page active-page">
+      <div class="mobile-map-toggle">
+        <button id="show-list-button" class="toggle-button active-toggle">Lista</button>
+        <button id="show-map-button" class="toggle-button">Kartta</button>
+      </div>
+
       <div class="layout">
-        <aside class="sidebar">
+        <aside class="sidebar" id="map-sidebar">
           <h2>Kappaleet</h2>
 
           <input
@@ -39,7 +44,7 @@
           <div id="song-list"></div>
         </aside>
 
-        <section class="map-area">
+        <section class="map-area" id="map-area">
           <div id="map"></div>
         </section>
       </div>
